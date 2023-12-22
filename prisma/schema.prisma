@@ -1,0 +1,36 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Text {
+  id    Int    @id @default(autoincrement())
+  value String
+}
+
+// Define your models
+model User {
+  id         Int    @id @default(autoincrement())
+  name       String
+  email      String @unique
+  roomId     Int?
+  // Add the following two lines to establish the relations
+  ownedRooms Room[] @relation("RoomToUser")
+  inRooms    Room[] @relation("RoomPlayers")
+}
+
+model Room {
+  id      Int    @id @default(autoincrement())
+  name    String
+  owner   User   @relation("RoomToUser", fields: [ownerId], references: [id])
+  ownerId Int
+
+  players User[] @relation("RoomPlayers")
+  text    String
+}
