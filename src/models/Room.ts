@@ -19,6 +19,15 @@ class Room {
         if (text) this.text = text
         else getText().then((text) => (this.text = text))
     }
+
+    toJSON() {
+        return {
+            name: this.name,
+            owner: this.owner,
+            users: this.users,
+            text: this.text,
+        }
+    }
 }
 
 export default Room

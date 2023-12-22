@@ -5,16 +5,21 @@ import { User } from '../../../types/user'
 
 const prisma = new PrismaClient()
 
+export const createRoomLocal = (name: string, user: User, text: string) => {
+    const localRoom = new Room(name, user, [user], text)
+
+    return localRoom
+}
+
 const createRoom = async (req: NextApiRequest, res: NextApiResponse) => {
     const { name, user } = req.body
-    // const { user } = req.cookies;
-
-    const localRoom = new Room(
+    const localRoom = createRoomLocal(
         name,
         user,
-        [user],
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
     )
+    // const { user } = req.cookies;
+
     /*   const room = await prisma.room.create({
     data: {
       name: localRoom.name,
