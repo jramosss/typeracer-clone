@@ -7,8 +7,6 @@ import Progress from './Progress'
 const Race = ({ room }: { room: Room }) => {
     const [currentWordIndex, setCurrentWordIndex] = useState(0)
 
-    console.log(currentWordIndex / room.text.split(' ').length)
-
     return room ? (
         <>
             <div className="flex flex-col items-center gap-4 mt-48">
