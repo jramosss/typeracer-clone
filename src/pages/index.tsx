@@ -9,7 +9,12 @@ const Home: FC = () => {
             <Head>
                 <title>TypeRacer Clone</title>
             </Head>
-            <Race />
+            <div className="flex justify-center items-center bg-slate-500">
+                <h1>TypeRacer Clone</h1>
+            </div>
+            <div style={{ height: 'max-content' }}>
+                <Race />
+            </div>
         </Layout>
     )
 }

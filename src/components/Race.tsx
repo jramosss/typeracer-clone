@@ -20,13 +20,7 @@ const Race = () => {
 
     return room ? (
         <>
-            <div className="flex justify-center items-center bg-slate-500">
-                <h1>TypeRacer Clone</h1>
-            </div>
-            <div
-                className="flex flex-col items-center gap-4 mt-48"
-                style={{ height: '100vh' }}
-            >
+            <div className="flex flex-col items-center gap-4 mt-48">
                 <div className="border-solid border-2 border-slate-500 p-4 break-words w-1/2">
                     {room.text.split(' ').map((word, index) => (
                         <span
