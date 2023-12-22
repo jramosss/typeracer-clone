@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
 interface TypingAreaProps {
     word: string
@@ -12,10 +12,15 @@ const TypingArea: FC<TypingAreaProps> = ({ word, onComplete, enabled }) => {
     const [typedWords, setTypedWords] = useState<string[]>([])
     const [firstWordTypedTimeStamp, setFirstWordTypedTimeStamp] = useState(0)
     const [wordsPerMinute, setWordsPerMinute] = useState(0)
+    const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         setFirstWordTypedTimeStamp(Date.now())
     }, [])
+
+    useEffect(() => {
+        if (enabled) inputRef.current?.focus()
+    }, [enabled])
 
     useEffect(() => {
         const timeElapsed = (Date.now() - firstWordTypedTimeStamp) / 1000
@@ -41,6 +46,7 @@ const TypingArea: FC<TypingAreaProps> = ({ word, onComplete, enabled }) => {
                 value={typedText}
                 onChange={(e) => setTypedText(e.target.value)}
                 disabled={!enabled}
+                ref={inputRef}
             />
             <div className="text-xs text-slate-400">
                 {wordsPerMinute.toFixed(0)} WPM

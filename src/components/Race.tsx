@@ -4,10 +4,36 @@ import TextArea from './TextArea'
 import { Room } from '../../types/room'
 import Progress from './Progress'
 
+const timerSecs = 6
+
 const Race = ({ room }: { room: Room }) => {
-    const [timerToStart, setTimerToStart] = useState(5)
+    const [timerToStart, setTimerToStart] = useState(timerSecs)
     const [currentWordIndex, setCurrentWordIndex] = useState(0)
     const { text } = room
+
+    const StartButton = () => {
+        return (
+            <button
+                title="Start"
+                onClick={() => {
+                    setTimerToStart(timerSecs - 1)
+                    const timer = setInterval(() => {
+                        setTimerToStart((prev) => prev - 1)
+                    }, 1000)
+                    setTimeout(() => {
+                        clearInterval(timer)
+                    }, 5000)
+                }}
+                className="bg-slate-400 text-white px-4 py-2 rounded-md"
+            >
+                Start
+            </button>
+        )
+    }
+
+    const Timer = () => {
+        return <div className="text-4xl text-slate-400">{timerToStart}</div>
+    }
 
     return room ? (
         <>
@@ -25,27 +51,8 @@ const Race = ({ room }: { room: Room }) => {
                     onComplete={() => setCurrentWordIndex((prev) => prev + 1)}
                     enabled={timerToStart === 0}
                 />
-                {timerToStart === 5 && (
-                    <button
-                        title="Start"
-                        onClick={() => {
-                            const timer = setInterval(() => {
-                                setTimerToStart((prev) => prev - 1)
-                            }, 1000)
-                            setTimeout(() => {
-                                clearInterval(timer)
-                            }, 5000)
-                        }}
-                        className="bg-slate-400 text-white px-4 py-2 rounded-md"
-                    >
-                        Start
-                    </button>
-                )}
-                {timerToStart !== 5 && timerToStart > 0 && (
-                    <div className="text-4xl text-slate-400">
-                        {timerToStart}
-                    </div>
-                )}
+                {timerToStart === timerSecs && <StartButton />}
+                {timerToStart > 0 && timerToStart !== timerSecs && <Timer />}
             </div>
         </>
     ) : (
