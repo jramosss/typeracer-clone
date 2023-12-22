@@ -5,7 +5,9 @@ import { Room } from '../../types/room'
 import Progress from './Progress'
 
 const Race = ({ room }: { room: Room }) => {
+    const [timerToStart, setTimerToStart] = useState(5)
     const [currentWordIndex, setCurrentWordIndex] = useState(0)
+    const { text } = room
 
     return room ? (
         <>
@@ -13,19 +15,37 @@ const Race = ({ room }: { room: Room }) => {
                 <div className="w-1/2">
                     <Progress
                         progress={
-                            (currentWordIndex / room.text.split(' ').length) *
-                            100
+                            (currentWordIndex / text.split(' ').length) * 100
                         }
                     />
                 </div>
-                <TextArea
-                    text={room.text}
-                    currentWordIndex={currentWordIndex}
-                />
+                <TextArea text={text} currentWordIndex={currentWordIndex} />
                 <TypingArea
-                    word={room.text.split(' ')[currentWordIndex]}
+                    word={text.split(' ')[currentWordIndex]}
                     onComplete={() => setCurrentWordIndex((prev) => prev + 1)}
+                    enabled={timerToStart === 0}
                 />
+                {timerToStart === 5 && (
+                    <button
+                        title="Start"
+                        onClick={() => {
+                            const timer = setInterval(() => {
+                                setTimerToStart((prev) => prev - 1)
+                            }, 1000)
+                            setTimeout(() => {
+                                clearInterval(timer)
+                            }, 5000)
+                        }}
+                        className="bg-slate-400 text-white px-4 py-2 rounded-md"
+                    >
+                        Start
+                    </button>
+                )}
+                {timerToStart !== 5 && timerToStart > 0 && (
+                    <div className="text-4xl text-slate-400">
+                        {timerToStart}
+                    </div>
+                )}
             </div>
         </>
     ) : (

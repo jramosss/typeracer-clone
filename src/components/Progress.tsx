@@ -18,7 +18,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
 
             <div
                 style={{ left: `${normalizedProgress}%` }}
-                className="absolute top-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 rounded-full"
+                className="absolute top-1/2 transform -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full"
             />
         </div>
     )

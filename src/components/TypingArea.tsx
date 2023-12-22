@@ -3,9 +3,10 @@ import { FC, useEffect, useState } from 'react'
 interface TypingAreaProps {
     word: string
     onComplete: () => void
+    enabled: boolean
 }
 
-const TypingArea: FC<TypingAreaProps> = ({ word, onComplete }) => {
+const TypingArea: FC<TypingAreaProps> = ({ word, onComplete, enabled }) => {
     const [incorrectWord, setIncorrectWord] = useState(false)
     const [typedText, setTypedText] = useState('')
     const [typedWords, setTypedWords] = useState<string[]>([])
@@ -39,6 +40,7 @@ const TypingArea: FC<TypingAreaProps> = ({ word, onComplete }) => {
                 }`}
                 value={typedText}
                 onChange={(e) => setTypedText(e.target.value)}
+                disabled={!enabled}
             />
             <div className="text-xs text-slate-400">
                 {wordsPerMinute.toFixed(0)} WPM
